@@ -1,7 +1,6 @@
 package iter
 
 import (
-	"log"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -17,7 +16,6 @@ func ChanCat[T any](its Iter[Iter[T]], bufsize, threads int) *Iterator[T] {
 	return &Iterator[T]{Iteratef: func(yield func(T) error) error {
 		c := make(chan T, bufsize)
 		f := func(val T) error {
-			log.Printf("putting %v in c\n", val)
 			c <- val
 			return nil
 		}
