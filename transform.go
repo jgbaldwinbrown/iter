@@ -1,4 +1,4 @@
-package fastats
+package iter
 
 func Transform[T, U any](it Iter[T], f func(T) (U, error)) *Iterator[U] {
 	return &Iterator[U]{Iteratef: func(yield func(U) error) error {

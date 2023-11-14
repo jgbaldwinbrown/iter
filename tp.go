@@ -1,4 +1,4 @@
-package fastats
+package iter
 
 import (
 )
