@@ -63,7 +63,7 @@ func Pull[T any](it Iter[T], buflen int) *PushPull[T] {
 			if ok {
 				return t, nil
 			}
-			return t, ErrPull
+			return t, io.EOF
 		case <-stopc:
 			var t T
 			return t, ErrPull
