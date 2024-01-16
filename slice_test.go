@@ -51,3 +51,20 @@ func BenchmarkSlicePuller(b *testing.B) {
 	}
 	g3 = val
 }
+
+var g4 int
+
+func BenchmarkSlicePullerUnbuffered(b *testing.B) {
+	b.StopTimer()
+	sl := make([]int, b.N)
+	si := SliceIter(sl)
+	sp := Pull[int](si, 0)
+	defer sp.Close()
+	b.StartTimer()
+
+	var val int
+	for v, e := sp.Next(); e != io.EOF; v, e = sp.Next() {
+		val = v
+	}
+	g4 = val
+}
