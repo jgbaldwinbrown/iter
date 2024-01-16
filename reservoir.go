@@ -21,6 +21,20 @@ func Sample[T any](it Iter[T], keep int, ra *rand.Rand) ([]T, error) {
 
 		i++
 		return nil
-	}
+	})
 	return r, e
+}
+
+func SamplePerc[T any](it Iter[T], keep float64, ra *rand.Rand) (*Iterator[T]) {
+	return &Iterator[T]{Iteratef: func(yield func(T) error) error {
+		return it.Iterate(func(x T) error {
+			f := ra.Float64()
+			if f <= keep {
+				if e := yield(x); e != nil {
+					return e
+				}
+			}
+			return nil
+		})
+	}}
 }
